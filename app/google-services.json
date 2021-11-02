@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1027151274110",
+    "project_id": "optik-joyo-abadi",
+    "storage_bucket": "optik-joyo-abadi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027151274110:android:8df84cc3b048c272c2782f",
+        "android_client_info": {
+          "package_name": "com.kp.optikjoyoabadi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027151274110-tabur16umgg75d3o99fcgscd9cmjcmbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZM4_f2ZYGi2tI1ZOZ4wAbFVm9Tu-cWkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027151274110-tabur16umgg75d3o99fcgscd9cmjcmbo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027151274110:android:d95a152dcf549dbdc2782f",
+        "android_client_info": {
+          "package_name": "com.kp.optikjoyoabadiadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027151274110-tabur16umgg75d3o99fcgscd9cmjcmbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZM4_f2ZYGi2tI1ZOZ4wAbFVm9Tu-cWkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027151274110-tabur16umgg75d3o99fcgscd9cmjcmbo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
