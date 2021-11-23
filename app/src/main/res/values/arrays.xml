@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>@string/kacamata</item>
+        <item>@string/sunglasses</item>
+        <item>@string/softlens</item>
+    </string-array>
+
+    <string-array name="shape">
+        <item>@string/round</item>
+        <item>@string/square</item>
+        <item>@string/frameless</item>
+        <item>@string/aksesoris</item>
+    </string-array>
+
+    <string-array name="categories_uid">
+        <item>KCT</item>
+        <item>SLS</item>
+        <item>SFL</item>
+    </string-array>
+
+    <string-array name="shape_uid">
+        <item>RND</item>
+        <item>SQR</item>
+        <item>FRL</item>
+        <item>ACC</item>
+    </string-array>
+</resources>

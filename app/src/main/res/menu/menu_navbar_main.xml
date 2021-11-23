@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_product_list"
+        android:title="@string/product_list"
+        android:enabled="true"
+        android:icon="@drawable/ic_product_24p"
+        />
+
+    <item
+        android:id="@+id/navigation_transaction_list"
+        android:title="@string/transaction_list"
+        android:enabled="true"
+        android:icon="@drawable/ic_receipt_24p"
+        />
+</menu>

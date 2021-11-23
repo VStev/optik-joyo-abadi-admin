@@ -1,3 +1,41 @@
 <resources>
     <string name="app_name">Optik Joyo Abadi Admin</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="product_image_thumbnail">Product Image Thumbnail</string>
+    <string name="product_list">Produk</string>
+    <string name="transaction_list">Transaksi</string>
+    <string name="saat_ini_kamu_memiliki_0_order_yang_belum_diproses">Saat ini kamu memiliki 0 order yang belum diproses</string>
+    <string name="tambah_produk">Tambah Produk</string>
+    <string name="daftar_produk">Daftar Produk</string>
+    <string name="daftar_transaksi">Daftar Transaksi</string>
+    <string name="nama_produk">Nama Produk</string>
+    <string name="kacamata">Kacamata</string>
+    <string name="sunglasses">Sunglasses</string>
+    <string name="softlens">Softlens</string>
+    <string name="round">Bulat</string>
+    <string name="square">Kotak</string>
+    <string name="frameless">Frameless</string>
+    <string name="aksesoris">Aksesoris</string>
+    <string name="kategori">Kategori</string>
+    <string name="bentuk">Bentuk</string>
+    <string name="harga">Harga</string>
+    <string name="stok">Stok</string>
+    <string name="details">Detil Produk</string>
+    <string name="bukti_transfer">Bukti Transfer</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="shipping">Shipping</string>
+    <string name="total">Total</string>
+    <string name="proses_pesanan">Proses Pesanan</string>
+    <string name="tolak_pesanan">Tolak Pesanan</string>
+    <string name="masukkan_nomor_resi">Masukkan Nomor Resi</string>
+    <string name="please_login_to_continue">Please Login to Continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="no_products_header">Anda belum memiliki produk</string>
+    <string name="no_product_detail">Tekan tanda + untuk menambahkan produk</string>
+    <string name="belum_ada_pesanan_masuk">Belum ada pesanan masuk</string>
+    <string name="tambah_barang">Tambah Barang</string>
+    <string name="update_barang">Update Barang</string>
 </resources>

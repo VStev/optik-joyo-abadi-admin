@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/drawable/ic_image_add_24p.xml" value="0.3609375" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3609375" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/drawable/ic_product_24p.xml" value="0.3609375" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/drawable/ic_receipt_24p.xml" value="0.3609375" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/activity_add_edit_product.xml" value="0.26358695652173914" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/activity_login.xml" value="0.33695652173913043" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/activity_payment_detail.xml" value="0.3307291666666667" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/activity_transaction_detail.xml" value="0.67" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/fragment_add_edit_product.xml" value="0.35733695652173914" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/fragment_add_product.xml" value="0.34479166666666666" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/fragment_home_screen.xml" value="0.25" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/fragment_login.xml" value="0.3423913043478261" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/fragment_product_list.xml" value="0.34479166666666666" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/fragment_transaction_detail.xml" value="0.5" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/fragment_transaction_list.xml" value="0.34479166666666666" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/fragment_transactionl_list.xml" value="0.34479166666666666" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/item_card_layout.xml" value="0.6002143622722401" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/item_transaction_details.xml" value="0.3423913043478261" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/layout/transaction_card_layout.xml" value="0.75" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/menu/manu_produk.xml" value="0.34479166666666666" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/menu/menu_navbar_main.xml" value="0.34479166666666666" />
+        <entry key="..\:/OptikJoyoAbadiAdmin/app/src/main/res/menu/menu_produk.xml" value="0.34479166666666666" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
