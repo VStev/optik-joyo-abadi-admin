@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadiadmin.R
 import com.kp.optikjoyoabadiadmin.adapters.TransactionAdapter
 import com.kp.optikjoyoabadiadmin.databinding.FragmentTransactionListBinding
@@ -17,7 +19,7 @@ import com.kp.optikjoyoabadiadmin.databinding.FragmentTransactionListBinding
 class TransactionListFragment : Fragment() {
 
     private lateinit var transactionAdapter: TransactionAdapter
-    private lateinit var fireDB: FirebaseFirestore
+    private val fireDB = Firebase.firestore
     private var _binding: FragmentTransactionListBinding? = null
     private val binding get() = _binding!!
 
@@ -42,8 +44,7 @@ class TransactionListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         FirebaseFirestore.setLoggingEnabled(true)
-        val rv: RecyclerView = view.findViewById(R.id.rv_product_item_list)
-        fireDB = FirebaseFirestore.getInstance()
+        val rv: RecyclerView = view.findViewById(R.id.rv_transaction_item)
         val query = fireDB.collection("Products")
         transactionAdapter = object : TransactionAdapter(query) {
             override fun onDataChanged() {

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.kp.optikjoyoabadiadmin.R
@@ -19,7 +20,7 @@ import com.kp.optikjoyoabadiadmin.ui.activity.addeditproduct.AddEditProductActiv
 class ProductListFragment : Fragment() {
 
     private lateinit var productAdapter: ProductAdapter
-    private lateinit var fireDB: FirebaseFirestore
+    private val fireDB = Firebase.firestore
     private var _binding: FragmentProductListBinding? = null
     private val binding get() = _binding!!
 
@@ -48,7 +49,6 @@ class ProductListFragment : Fragment() {
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
         val rv: RecyclerView = view.findViewById(R.id.rv_product_item_list)
-        fireDB = FirebaseFirestore.getInstance()
         val query = fireDB.collection("Products")
         val reference = Firebase.storage.reference
         productAdapter = object : ProductAdapter(query, reference) {

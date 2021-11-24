@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -25,7 +26,7 @@ import com.kp.optikjoyoabadiadmin.ui.activity.paymentdetail.PaymentDetailActivit
 class TransactionDetailActivity : AppCompatActivity() {
     private lateinit var detailAdapter: TransactionDetailAdapter
     private var _binding: ActivityTransactionDetailBinding? = null
-    private lateinit var fireDB: FirebaseFirestore
+    private val fireDB = Firebase.firestore
     private lateinit var transactionId: String
     private val binding get() = _binding!!
 
@@ -138,6 +139,7 @@ class TransactionDetailActivity : AppCompatActivity() {
                 val data = it.result?.toObject<Transaction>()
                 val region = data?.city + data?.region
                 binding.transactionInvoices.text = data?.transactionId
+                binding.tanggalBeli.text = data?.dateTime.toString()
                 binding.statusTransaksi.text = data?.status
                 binding.namaPenerima.text = data?.recipientName
                 binding.alamatPenerima.text = data?.street
@@ -146,8 +148,8 @@ class TransactionDetailActivity : AppCompatActivity() {
                 binding.subtotalPrice.text = data?.subtotal.toString()
                 binding.shippingPrice.text = data?.shippingFee.toString()
                 binding.totalPrice.text = data?.total.toString()
-                if (data?.shippingNumber != null){
-                    binding.noResiPenerima.text = data.shippingNumber
+                if (data?.shippingNumber != ""){
+                    binding.noResiPenerima.text = data?.shippingNumber
                     binding.noResiPenerima.visibility = View.VISIBLE
                     binding.buttonResi.visibility = View.GONE
                 }

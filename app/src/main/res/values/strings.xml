@@ -38,4 +38,11 @@
     <string name="belum_ada_pesanan_masuk">Belum ada pesanan masuk</string>
     <string name="tambah_barang">Tambah Barang</string>
     <string name="update_barang">Update Barang</string>
+    <string name="invoice">INVOICE</string>
+    <string name="tanggal_pembelian">TANGGAL PEMBELIAN</string>
+    <string name="tanggal_pembayaran">TANGGAL PEMBAYARAN</string>
+    <string name="jumlah_bayar">JUMLAH BAYAR</string>
+    <string name="bukti_pembayaran">BUKTI PEMBAYARAN</string>
+    <string name="belum_bayar">Pembayaran belum dilakukan</string>
+    <string name="token_fmt">%s</string>
 </resources>

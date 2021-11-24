@@ -4,15 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
     app:startDestination="@id/productListFragment">
-
     <fragment
         android:id="@+id/productListFragment"
-        android:name="com.kp.optikjoyoabadiadmin.ProductListFragment"
+        android:name="com.kp.optikjoyoabadiadmin.ui.fragment.productlist.ProductListFragment"
         android:label="fragment_product_list"
-        tools:layout="@layout/fragment_product_list" />
+        tools:layout="@layout/fragment_product_list" >
+        <action
+            android:id="@+id/action_productListFragment_to_addEditProductActivity"
+            app:destination="@id/addEditProductActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.kp.optikjoyoabadiadmin.ui.activity.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/transactionDetailActivity"
+        android:name="com.kp.optikjoyoabadiadmin.ui.activity.transactiondetail.TransactionDetailActivity"
+        android:label="activity_transaction_detail"
+        tools:layout="@layout/activity_transaction_detail" />
     <fragment
-        android:id="@+id/transactionlListFragment"
-        android:name="com.kp.optikjoyoabadiadmin.TransactionlListFragment"
-        android:label="fragment_transactionl_list"
-        tools:layout="@layout/fragment_transaction_list" />
+        android:id="@+id/transactionListFragment"
+        android:name="com.kp.optikjoyoabadiadmin.ui.fragment.transactionlist.TransactionListFragment"
+        android:label="fragment_transaction_list"
+        tools:layout="@layout/fragment_transaction_list" >
+        <action
+            android:id="@+id/action_transactionListFragment_to_transactionDetailActivity"
+            app:destination="@id/transactionDetailActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/addEditProductActivity"
+        android:name="com.kp.optikjoyoabadiadmin.ui.activity.addeditproduct.AddEditProductActivity"
+        android:label="activity_add_edit_product"
+        tools:layout="@layout/activity_add_edit_product" />
+    <activity
+        android:id="@+id/paymentDetailActivity"
+        android:name="com.kp.optikjoyoabadiadmin.ui.activity.paymentdetail.PaymentDetailActivity"
+        android:label="activity_payment_detail"
+        tools:layout="@layout/activity_payment_detail" />
 </navigation>

@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
@@ -12,7 +12,7 @@ import com.kp.optikjoyoabadiadmin.model.Product
 
 class AddEditProductViewModel: ViewModel() {
 
-    private lateinit var fireDb: FirebaseFirestore
+    private val fireDB = Firebase.firestore
     private val storage = Firebase.storage
     private val reference = storage.reference
 
@@ -36,7 +36,7 @@ class AddEditProductViewModel: ViewModel() {
         )
         uploadTask
             .addOnSuccessListener {
-                fireDb.collection("Products").document(data.productId)
+                fireDB.collection("Products").document(data.productId)
                     .set(product)
                     .addOnSuccessListener {
                         value.value = true
