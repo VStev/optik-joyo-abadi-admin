@@ -5,11 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.StorageReference
+import com.kp.optikjoyoabadiadmin.GlideApp
 import com.kp.optikjoyoabadiadmin.databinding.ItemCardLayoutBinding
 import com.kp.optikjoyoabadiadmin.model.Product
 import com.kp.optikjoyoabadiadmin.ui.activity.addeditproduct.AddEditProductActivity
@@ -22,12 +22,12 @@ open class ProductAdapter(query: Query, private val reference: StorageReference)
             Log.d("bind:", "$product")
             items.txtProductName.text = product?.productName
             items.txtProdCategory.text = product?.category
-            items.txtProductPrice.text = product?.price.toString()
-            items.txtStock.text = product?.stock.toString()
+            items.txtProductPrice.text = "Rp. ${product?.price.toString()}"
+            items.txtStock.text = "${product?.stock.toString()} Pcs"
             val image = product?.let { reference.child("products/${it.image_url}") }
-            Glide.with(items.root)
+            GlideApp.with(items.root)
                 .load(image)
-                .override(128,128)
+                .override(256,256)
                 .into(items.productPictureThumb)
             items.root.setOnClickListener {
                 val intent = Intent(items.root.context, AddEditProductActivity::class.java)

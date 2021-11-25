@@ -10,6 +10,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.StorageReference
+import com.kp.optikjoyoabadiadmin.GlideApp
+import com.kp.optikjoyoabadiadmin.MyGlideApp
 import com.kp.optikjoyoabadiadmin.databinding.ItemTransactionDetailsBinding
 import com.kp.optikjoyoabadiadmin.model.TransactionDetail
 
@@ -26,9 +28,9 @@ open class TransactionDetailAdapter(query: Query, private val reference: Storage
             items.txtItemname.text = transactionDetail?.productName
             items.txtPrice.text = transactionDetail?.price.toString()
             val image = transactionDetail?.let { reference.child("products/${it.image_url}") }
-            Glide.with(items.root)
+            GlideApp.with(items.root)
                 .load(image)
-                .override(128,128)
+                .override(256,256)
                 .into(items.productPictureThumb)
         }
     }

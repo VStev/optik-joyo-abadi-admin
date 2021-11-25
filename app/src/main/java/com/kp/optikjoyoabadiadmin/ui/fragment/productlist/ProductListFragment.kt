@@ -81,8 +81,8 @@ class ProductListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_add_product) {
             val intent = Intent(context, AddEditProductActivity::class.java)
-            intent.putExtra(AddEditProductActivity.EXTRA_ARGUMENT, "new product")
-            intent.putExtra(AddEditProductActivity.EXTRA_ID, "a")
+            intent.putExtra(AddEditProductActivity.EXTRA_ARGUMENT, "a")
+            intent.putExtra(AddEditProductActivity.EXTRA_ID, "new product")
             context?.startActivity(intent)
             return true
         }

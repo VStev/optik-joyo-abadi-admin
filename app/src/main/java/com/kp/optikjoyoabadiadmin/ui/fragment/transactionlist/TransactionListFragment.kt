@@ -43,6 +43,7 @@ class TransactionListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //remove after development
         FirebaseFirestore.setLoggingEnabled(true)
         val rv: RecyclerView = view.findViewById(R.id.rv_transaction_item)
         val query = fireDB.collection("Products")

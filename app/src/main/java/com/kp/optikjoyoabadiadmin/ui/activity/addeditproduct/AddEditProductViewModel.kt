@@ -1,9 +1,11 @@
 package com.kp.optikjoyoabadiadmin.ui.activity.addeditproduct
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -16,13 +18,15 @@ class AddEditProductViewModel: ViewModel() {
     private val storage = Firebase.storage
     private val reference = storage.reference
 
-    fun submitData(data: Product, image: Uri): LiveData<Boolean> {
+    fun submitData(data: Product, image: Uri): LiveData<String> {
+        //remove after development
+        FirebaseFirestore.setLoggingEnabled(true)
         val metadata = storageMetadata {
             contentType = "image/jpeg"
         }
         val uploadTask = reference.child("products/${data.image_url}").putFile(image, metadata)
-        val value = MutableLiveData<Boolean>().apply{
-            value = false
+        val value = MutableLiveData<String>().apply{
+            value = "onProcess"
         }
         val product = hashMapOf(
             "productId" to data.productId,
@@ -39,11 +43,12 @@ class AddEditProductViewModel: ViewModel() {
                 fireDB.collection("Products").document(data.productId)
                     .set(product)
                     .addOnSuccessListener {
-                        value.value = true
+                        value.value = "Success!"
                     }
+                Log.d("TAG", "submitData: IMAGE UPLOADED")
             }
             .addOnFailureListener {
-                value.value = false
+                value.value = "Failed!"
             }
         return value
     }

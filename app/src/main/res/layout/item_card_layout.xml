@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/product_picture_thumb"
             app:layout_constraintTop_toTopOf="@+id/product_picture_thumb"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toEndOf="@+id/product_picture_thumb"
             app:layout_constraintTop_toBottomOf="@+id/txt_product_name"
             tools:text="Category" />
@@ -50,9 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/product_picture_thumb"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toEndOf="@+id/product_picture_thumb"
             app:layout_constraintTop_toBottomOf="@+id/txt_prod_category"
             tools:text="Price" />
