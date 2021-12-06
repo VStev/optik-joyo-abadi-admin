@@ -46,7 +46,7 @@ class TransactionListFragment : Fragment() {
         //remove after development
         FirebaseFirestore.setLoggingEnabled(true)
         val rv: RecyclerView = view.findViewById(R.id.rv_transaction_item)
-        val query = fireDB.collection("Products")
+        val query = fireDB.collection("Transactions")
         transactionAdapter = object : TransactionAdapter(query) {
             override fun onDataChanged() {
                 super.onDataChanged()
