@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +49,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         transactionId = intent.getStringExtra(EXTRA_ID).toString()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setContentView()
+        showLayout()
         setOnClickListeners()
     }
 
@@ -63,7 +62,7 @@ class TransactionDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Toast.makeText(baseContext, "Pesanan telah dibatalkan.",
                         Toast.LENGTH_SHORT).show()
-                    setContentView()
+                    showLayout()
                 }
                 .addOnFailureListener {
                     Toast.makeText(baseContext, "Gagal mengubah status pesanan! $it",
@@ -83,7 +82,7 @@ class TransactionDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Toast.makeText(baseContext, "Berhasil mengubah status pesanan.",
                         Toast.LENGTH_SHORT).show()
-                    setContentView()
+                    showLayout()
                 }
                 .addOnFailureListener {
                     Toast.makeText(baseContext, "Gagal mengubah status pesanan! $it",
@@ -108,9 +107,9 @@ class TransactionDetailActivity : AppCompatActivity() {
                         "shippingNumber" to input.text.toString()
                     ))
                     .addOnSuccessListener {
-                        Toast.makeText(baseContext, "Pesanan telah dibatalkan.",
+                        Toast.makeText(baseContext, "Pesanan telah dikirimkan.",
                             Toast.LENGTH_SHORT).show()
-                        setContentView()
+                        showLayout()
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(baseContext, "Gagal mengubah status pesanan! $e",
@@ -125,7 +124,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun setContentView() {
+    private fun showLayout() {
         //remove the line of code below after done developing
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
