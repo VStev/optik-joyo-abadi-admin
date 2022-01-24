@@ -20,6 +20,7 @@ import com.google.firebase.storage.ktx.storage
 import com.kp.optikjoyoabadiadmin.adapters.TransactionDetailAdapter
 import com.kp.optikjoyoabadiadmin.databinding.ActivityTransactionDetailBinding
 import com.kp.optikjoyoabadiadmin.model.Transaction
+import com.kp.optikjoyoabadiadmin.model.TransactionDetail
 import com.kp.optikjoyoabadiadmin.ui.activity.paymentdetail.PaymentDetailActivity
 
 class TransactionDetailActivity : AppCompatActivity() {
@@ -49,6 +50,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         transactionId = intent.getStringExtra(EXTRA_ID).toString()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = ""
         showLayout()
         setOnClickListeners()
     }
@@ -82,6 +84,7 @@ class TransactionDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Toast.makeText(baseContext, "Berhasil mengubah status pesanan.",
                         Toast.LENGTH_SHORT).show()
+                    commitStock()
                     showLayout()
                 }
                 .addOnFailureListener {
@@ -91,11 +94,6 @@ class TransactionDetailActivity : AppCompatActivity() {
         }
 
         binding.buttonResi.setOnClickListener {
-//            val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-//                if (it.resultCode == Activity.RESULT_OK && it.data != null){
-//
-//                }
-//            }
             val builder: AlertDialog.Builder = AlertDialog.Builder(baseContext)
             builder.setTitle("Masukkan Nomor Resi")
             val input = EditText(baseContext)
@@ -173,4 +171,24 @@ class TransactionDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun commitStock(){
+        val query = fireDB.collection("TransactionDetail")
+            .whereEqualTo("transactionId", transactionId)
+        query.get()
+            .addOnSuccessListener {
+                for (i in 0 until it.size()-1){
+                    val item = it.documents[i].toObject<TransactionDetail>()
+                    val reference = item?.let { it1 -> fireDB.collection("Products").document(it1.productId) }
+                    reference?.get()?.addOnSuccessListener { product ->
+                        val stock = product["stock"] as Int
+                        val newStock = if (stock - item.quantity < 0) 0 else stock - item.quantity
+                        reference.update(
+                            mapOf(
+                                "stock" to newStock
+                            )
+                        )
+                    }
+                }
+            }
+    }
 }

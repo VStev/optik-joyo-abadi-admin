@@ -36,7 +36,8 @@ class AddEditProductViewModel: ViewModel() {
             "price" to data.price,
             "stock" to data.stock,
             "details" to data.details,
-            "image_url" to data.image_url
+            "image_url" to data.image_url,
+            "deleted" to false
         )
         uploadTask
             .addOnSuccessListener {

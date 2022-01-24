@@ -13,13 +13,16 @@
         android:theme="@style/Theme.OptikJoyoAbadiAdmin">
         <activity
             android:name=".ui.activity.paymentdetail.PaymentDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.activity.transactiondetail.TransactionDetailActivity" />
         <activity
             android:name=".ui.activity.addeditproduct.AddEditProductActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.transactiondetail.TransactionDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="false" />

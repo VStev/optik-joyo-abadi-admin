@@ -48,8 +48,10 @@ class ProductListFragment : Fragment() {
         //remove the line of code below after done developing
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
+        activity?.title = getString(R.string.daftar_produk)
         val rv: RecyclerView = view.findViewById(R.id.rv_product_item_list)
         val query = fireDB.collection("Products")
+            .whereEqualTo("deleted", false)
         val reference = Firebase.storage.reference
         productAdapter = object : ProductAdapter(query, reference) {
             override fun onDataChanged() {

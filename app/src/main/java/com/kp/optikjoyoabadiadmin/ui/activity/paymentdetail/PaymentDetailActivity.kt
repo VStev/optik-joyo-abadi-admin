@@ -33,6 +33,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         transactionID = intent.getStringExtra(EXTRA_PAYID).toString()
         payAmt = intent.getIntExtra(EXTRA_PAYMENT, 0)
+        title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView()
     }

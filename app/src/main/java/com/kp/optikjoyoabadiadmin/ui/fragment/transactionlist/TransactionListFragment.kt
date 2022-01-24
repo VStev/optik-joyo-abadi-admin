@@ -45,6 +45,7 @@ class TransactionListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //remove after development
         FirebaseFirestore.setLoggingEnabled(true)
+        activity?.title = getString(R.string.daftar_transaksi)
         val rv: RecyclerView = view.findViewById(R.id.rv_transaction_item)
         val query = fireDB.collection("Transactions")
         transactionAdapter = object : TransactionAdapter(query) {

@@ -8,5 +8,6 @@ data class Product (
     val price: Int = 0,
     val stock: Int = 0,
     val details: String = "",
-    val image_url: String = ""
+    val image_url: String = "",
+    val deleted: Boolean = false
     )

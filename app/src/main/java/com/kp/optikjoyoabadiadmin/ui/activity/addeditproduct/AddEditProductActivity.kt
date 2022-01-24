@@ -5,19 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import com.google.firebase.storage.ktx.storageMetadata
 import com.kp.optikjoyoabadiadmin.GlideApp
 import com.kp.optikjoyoabadiadmin.R
 import com.kp.optikjoyoabadiadmin.databinding.ActivityAddEditProductBinding
@@ -66,29 +63,29 @@ class AddEditProductActivity : AppCompatActivity() {
 
     private fun setOnClickListeners() {
         binding.productAddImage.setOnClickListener {
-            val options = arrayOf<CharSequence>("Choose from Gallery", "Cancel")
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            builder.setTitle("Choose product picture")
-            builder.setItems(options) { dialog, item ->
-                when {
-                    options[item] == "Choose from Gallery" -> {
-                        val pickPhoto =
-                            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        resultLauncher.launch(pickPhoto)
-                    }
-                    options[item] == "Cancel" -> {
-                        dialog.dismiss()
+            if (argument == "a"){
+                val options = arrayOf<CharSequence>("Choose from Gallery", "Cancel")
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                builder.setTitle("Choose product picture")
+                builder.setItems(options) { dialog, item ->
+                    when {
+                        options[item] == "Choose from Gallery" -> {
+                            val pickPhoto =
+                                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            resultLauncher.launch(pickPhoto)
+                        }
+                        options[item] == "Cancel" -> {
+                            dialog.dismiss()
+                        }
                     }
                 }
+                builder.show()
             }
-            builder.show()
         }
 
         binding.buttonAdd.setOnClickListener {
-            Log.d("TAG", "setOnClickListeners: PRESSED ADD")
             when (argument) {
                 "a" -> {
-                    Log.d("TAG", "setOnClickListeners: PRESSED ADD ARGUMENT A")
                     var uniqueIdentifier = ""
                     //randomizes number for UID
                     val randomized = Random.nextInt(0, 100)
@@ -125,7 +122,6 @@ class AddEditProductActivity : AppCompatActivity() {
                     uniqueIdentifier =
                         uniqueIdentifier + randomized.toString() + productName.substring(0,3)
                     val picturePath = uniqueIdentifier + productName
-                    Log.d("TAG", "setOnClickListeners: $uniqueIdentifier")
                     val product = Product(
                         uniqueIdentifier,
                         productName,
@@ -162,7 +158,8 @@ class AddEditProductActivity : AppCompatActivity() {
                                 "stock" to binding.addStockProduct.text.toString().toInt(),
                                 "category" to category,
                                 "shape" to shape,
-                                "productName" to binding.addProductName.text.toString()
+                                "productName" to binding.addProductName.text.toString(),
+                                "deleted" to false
                             )
                         )
                         .addOnSuccessListener {
@@ -173,16 +170,35 @@ class AddEditProductActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.buttonDelete.setOnClickListener {
+            val reference = fireDB.collection("Products").document(productId)
+            reference
+                .update(
+                mapOf(
+                    "deleted" to true
+                )
+            )
+                .addOnSuccessListener {
+                    Toast.makeText(baseContext, "Sukses menghapus barang", Toast.LENGTH_LONG)
+                        .show()
+                    finish()
+                }
+        }
     }
 
     private fun setContentView() {
         when (argument) {
             "a" -> {
                 binding.buttonAdd.text = getString(R.string.tambah_barang)
+                title = getString(R.string.tambah_barang)
             }
             "b" -> {
                 binding.buttonAdd.text = getString(R.string.update_barang)
+                title = getString(R.string.update_barang)
+                binding.buttonDelete.visibility = View.VISIBLE
                 val query = fireDB.collection("Products").document(productId)
+                binding.addProductName.isEnabled = false
                 binding.addKategori.isEnabled = false
                 binding.addBentuk.isEnabled = false
                 val reference = Firebase.storage.reference
