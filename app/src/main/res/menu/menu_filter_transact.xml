@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/unconfirmed"
+        android:title="Unconfirmed"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/processed"
+        android:title="Processed"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/cancel"
+        android:title="Cancelled"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/finish"
+        android:title="Finished"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/all_items"
+        android:title="Semua transaksi"
+        android:enabled="true"/>
+
+</menu>

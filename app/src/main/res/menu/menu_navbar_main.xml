@@ -13,4 +13,11 @@
         android:enabled="true"
         android:icon="@drawable/ic_receipt_24p"
         />
+
+    <item
+        android:id="@+id/securityFragment"
+        android:title="Security"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_lock_24" />
+
 </menu>

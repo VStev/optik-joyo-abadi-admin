@@ -42,7 +42,8 @@ class PaymentDetailActivity : AppCompatActivity() {
         //remove the line of code below after done developing
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
-        val query = fireDB.collection("Payment").document(transactionID)
+        val paymentId = "PAY-$transactionID"
+        val query = fireDB.collection("Payment").document(paymentId)
         val reference = Firebase.storage.reference
         query.get()
             .addOnCompleteListener {
@@ -51,14 +52,20 @@ class PaymentDetailActivity : AppCompatActivity() {
                     if (paymentDetail.transactionId != transactionID){
                         Toast.makeText(baseContext, "TERJADI KESALAHAN DALAM MEMUAT DATA", Toast.LENGTH_SHORT).show()
                     }else{
-                        binding.invoiceNumber.text = paymentDetail.transactionId
-                        binding.paymentDate.text = paymentDetail.receivedAt.toString()
-                        binding.totalBayar.text = paymentDetail.amount.toString()
-                        val image = reference.child("Payment/${paymentDetail.proof}")
-                        Glide.with(binding.root)
-                            .load(image)
-                            .override(256,256)
-                            .into(binding.buktiBayar)
+                        if (paymentDetail.proof.isNotBlank() || paymentDetail.proof.isNotBlank()){
+                            binding.invoiceNumber.text = paymentDetail.transactionId
+                            binding.paymentDate.text = paymentDetail.receivedAt.toDate().toString()
+                            binding.totalBayar.text = paymentDetail.amount.toString()
+                            val image = reference.child("payments/${paymentDetail.proof}")
+                            Glide.with(binding.root)
+                                .load(image)
+                                .override(400,400)
+                                .into(binding.buktiBayar)
+                        }else{
+                            binding.invoiceNumber.text = transactionID
+                            binding.paymentDate.text = getString(R.string.belum_bayar)
+                            binding.totalBayar.text = payAmt.toString()
+                        }
                     }
                 }
             }

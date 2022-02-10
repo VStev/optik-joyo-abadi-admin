@@ -57,11 +57,16 @@
 
             <TextView
                 android:id="@+id/invoice_number"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAlignment="viewEnd"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="INV/42069KCMSFT" />
 
@@ -69,10 +74,13 @@
                 android:id="@+id/payment_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:maxLines="2"
+                android:textAlignment="viewEnd"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/invoice_number"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/invoice_number"
                 tools:text="September 7, 2021 at 4:05:00 PM" />
 
@@ -121,8 +129,8 @@
 
             <ImageView
                 android:id="@+id/bukti_bayar"
-                android:layout_width="256dp"
-                android:layout_height="256dp"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"

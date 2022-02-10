@@ -1,15 +1,14 @@
 package com.kp.optikjoyoabadiadmin.ui.fragment.transactionlist
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.kp.optikjoyoabadiadmin.R
@@ -22,6 +21,7 @@ class TransactionListFragment : Fragment() {
     private val fireDB = Firebase.firestore
     private var _binding: FragmentTransactionListBinding? = null
     private val binding get() = _binding!!
+    private var argument: String = "all"
 
     override fun onStart() {
         super.onStart()
@@ -38,6 +38,7 @@ class TransactionListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTransactionListBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -47,7 +48,17 @@ class TransactionListFragment : Fragment() {
         FirebaseFirestore.setLoggingEnabled(true)
         activity?.title = getString(R.string.daftar_transaksi)
         val rv: RecyclerView = view.findViewById(R.id.rv_transaction_item)
-        val query = fireDB.collection("Transactions")
+        val query = when{
+            (argument == "all") -> {
+                fireDB.collection("Transactions")
+                    .orderBy("dateTime", Query.Direction.DESCENDING)
+            }
+            else -> {
+                fireDB.collection("Transactions")
+                    .orderBy("dateTime", Query.Direction.DESCENDING)
+                    .whereEqualTo("status", argument)
+            }
+        }
         transactionAdapter = object : TransactionAdapter(query) {
             override fun onDataChanged() {
                 super.onDataChanged()
@@ -69,4 +80,23 @@ class TransactionListFragment : Fragment() {
             adapter = transactionAdapter
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_filter_transact, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        argument = when{
+            (item.itemId == R.id.unconfirmed) -> "UNCONFIRMED"
+            (item.itemId == R.id.processed) -> "PROCESSED"
+            (item.itemId == R.id.cancel) -> "CANCELLED"
+            (item.itemId == R.id.finish) -> "FINISHED"
+            else -> "all"
+        }
+        activity?.title = if (argument == "all") "Semua transaksi" else argument
+        transactionAdapter.updateQuery(argument)
+        return super.onOptionsItemSelected(item)
+    }
+
 }

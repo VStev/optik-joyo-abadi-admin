@@ -17,6 +17,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.kp.optikjoyoabadiadmin.R
 import com.kp.optikjoyoabadiadmin.adapters.TransactionDetailAdapter
 import com.kp.optikjoyoabadiadmin.databinding.ActivityTransactionDetailBinding
 import com.kp.optikjoyoabadiadmin.model.Transaction
@@ -56,7 +57,7 @@ class TransactionDetailActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListeners() {
-        val reference = fireDB.collection("Transaction").document(transactionId)
+        val reference = fireDB.collection("Transactions").document(transactionId)
 
         binding.buttonCancelOrder.setOnClickListener {
             reference
@@ -64,7 +65,9 @@ class TransactionDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Toast.makeText(baseContext, "Pesanan telah dibatalkan.",
                         Toast.LENGTH_SHORT).show()
-                    showLayout()
+                    binding.statusTransaksi.text = "CANCELLED"
+                    binding.buttonProcessOrder.visibility = View.GONE
+                    binding.buttonCancelOrder.visibility = View.GONE
                 }
                 .addOnFailureListener {
                     Toast.makeText(baseContext, "Gagal mengubah status pesanan! $it",
@@ -84,8 +87,9 @@ class TransactionDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Toast.makeText(baseContext, "Berhasil mengubah status pesanan.",
                         Toast.LENGTH_SHORT).show()
-                    commitStock()
-                    showLayout()
+                    binding.buttonProcessOrder.visibility = View.GONE
+                    binding.buttonResi.visibility = View.VISIBLE
+                    binding.statusTransaksi.text = "PROCESSED"
                 }
                 .addOnFailureListener {
                     Toast.makeText(baseContext, "Gagal mengubah status pesanan! $it",
@@ -94,20 +98,25 @@ class TransactionDetailActivity : AppCompatActivity() {
         }
 
         binding.buttonResi.setOnClickListener {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(baseContext)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
             builder.setTitle("Masukkan Nomor Resi")
-            val input = EditText(baseContext)
-            builder.setView(input)
+            val view = layoutInflater.inflate(R.layout.set_shipping_alert_dialog_box, null)
+            builder.setView(view)
             builder.setPositiveButton("Ok") { dialog, _ ->
+                val resi = view.findViewById<EditText>(R.id.addResi).text.toString()
                 reference
                     .update(mapOf(
                         "status" to "SHIPPED",
-                        "shippingNumber" to input.text.toString()
+                        "shippingNumber" to resi
                     ))
                     .addOnSuccessListener {
                         Toast.makeText(baseContext, "Pesanan telah dikirimkan.",
                             Toast.LENGTH_SHORT).show()
-                        showLayout()
+                        binding.buttonResi.visibility = View.GONE
+                        binding.buttonCancelOrder.visibility = View.GONE
+                        binding.statusTransaksi.text = "SHIPPED"
+                        binding.noResiPenerima.visibility = View.VISIBLE
+                        binding.noResiPenerima.text = resi
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(baseContext, "Gagal mengubah status pesanan! $e",
@@ -127,7 +136,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         FirebaseFirestore.setLoggingEnabled(true)
         //remove the line of code above after done developing
         val rv: RecyclerView = binding.recyclerTransactionItem
-        val query = fireDB.collection("Transaction").document(transactionId)
+        val query = fireDB.collection("Transactions").document(transactionId)
         val rvQuery = fireDB.collection("TransactionDetail")
             .whereEqualTo("transactionId", transactionId)
         val reference = Firebase.storage.reference
@@ -136,23 +145,35 @@ class TransactionDetailActivity : AppCompatActivity() {
                 val data = it.result?.toObject<Transaction>()
                 val region = data?.city + data?.region
                 binding.transactionInvoices.text = data?.transactionId
-                binding.tanggalBeli.text = data?.dateTime.toString()
+                binding.tanggalBeli.text = data?.dateTime?.toDate().toString()
                 binding.statusTransaksi.text = data?.status
                 binding.namaPenerima.text = data?.recipientName
+                binding.nomorTeleponPenerima.text = data?.phoneNumber
                 binding.alamatPenerima.text = data?.street
                 binding.regionPenerima.text = region
                 binding.postalCodePenerima.text = data?.postalCode.toString()
-                binding.subtotalPrice.text = data?.subtotal.toString()
-                binding.shippingPrice.text = data?.shippingFee.toString()
-                binding.totalPrice.text = data?.total.toString()
+                binding.subtotalPrice.text = "Rp. ${data?.subTotal.toString()}"
+                binding.shippingPrice.text = "Rp. ${data?.shippingFee.toString()}"
+                binding.totalPrice.text = "Rp. ${data?.total.toString()}"
                 if (data?.shippingNumber != ""){
                     binding.noResiPenerima.text = data?.shippingNumber
                     binding.noResiPenerima.visibility = View.VISIBLE
                     binding.buttonResi.visibility = View.GONE
                 }
-                if (data?.status != "UNCONFIRMED" || data.status != "WAITING PAYMENT"){
-                    binding.buttonProcessOrder.visibility = View.GONE
-                    binding.buttonCancelOrder.visibility = View.GONE
+                if (data != null) {
+                    if (data.status == "FINISHED" || data.status == "WAITING FOR PAYMENT" || data.status == "CANCELLED" || data.status == "SHIPPED"){
+                        binding.buttonProcessOrder.visibility = View.GONE
+                        binding.buttonCancelOrder.visibility = View.GONE
+                        binding.buttonResi.visibility = View.GONE
+                    }else if (data.status == "UNCONFIRMED"){
+                        binding.buttonResi.visibility = View.GONE
+                        binding.buttonProcessOrder.visibility = View.VISIBLE
+                        binding.buttonCancelOrder.visibility = View.VISIBLE
+                    }else if (data.status == "PROCESSED"){
+                        binding.buttonProcessOrder.visibility = View.GONE
+                        binding.noResiPenerima.visibility = View.VISIBLE
+                        binding.buttonCancelOrder.visibility = View.VISIBLE
+                    }
                 }
             }else{
                 Log.w("TAG", "loadDetail:failure", it.exception)
@@ -169,26 +190,5 @@ class TransactionDetailActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
             adapter = detailAdapter
         }
-    }
-
-    private fun commitStock(){
-        val query = fireDB.collection("TransactionDetail")
-            .whereEqualTo("transactionId", transactionId)
-        query.get()
-            .addOnSuccessListener {
-                for (i in 0 until it.size()-1){
-                    val item = it.documents[i].toObject<TransactionDetail>()
-                    val reference = item?.let { it1 -> fireDB.collection("Products").document(it1.productId) }
-                    reference?.get()?.addOnSuccessListener { product ->
-                        val stock = product["stock"] as Int
-                        val newStock = if (stock - item.quantity < 0) 0 else stock - item.quantity
-                        reference.update(
-                            mapOf(
-                                "stock" to newStock
-                            )
-                        )
-                    }
-                }
-            }
     }
 }

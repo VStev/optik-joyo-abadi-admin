@@ -46,4 +46,7 @@
     <string name="belum_bayar">Pembayaran belum dilakukan</string>
     <string name="token_fmt">%s</string>
     <string name="hapus_barang">Hapus Barang</string>
+    <string name="ubah">Ubah</string>
+    <string name="batal">Batal</string>
+    <string name="simpan">Simpan</string>
 </resources>

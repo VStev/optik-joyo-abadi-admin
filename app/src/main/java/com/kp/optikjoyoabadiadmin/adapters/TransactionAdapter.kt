@@ -9,6 +9,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
 import com.kp.optikjoyoabadiadmin.databinding.TransactionCardLayoutBinding
+import com.kp.optikjoyoabadiadmin.getFirebaseFirestoreInstance
 import com.kp.optikjoyoabadiadmin.model.Transaction
 import com.kp.optikjoyoabadiadmin.ui.activity.transactiondetail.TransactionDetailActivity
 
@@ -18,9 +19,9 @@ open class TransactionAdapter(query: Query): FirestoreAdapter<TransactionAdapter
         fun bind(data: DocumentSnapshot) {
             val transaction = data.toObject<Transaction>()
             Log.d("bind:", "$transaction")
-            items.txtTransactionNumber.text = transaction?.transactionId
+            items.txtTransactionNumber.text = transaction?.headerTitle
             items.txtTransactionStatus.text = transaction?.status
-            items.txtTransactionTotal.text = transaction?.total.toString()
+            items.txtTransactionTotal.text = "Rp. ${transaction?.total.toString()}"
             items.root.setOnClickListener {
                 val intent = Intent(items.root.context, TransactionDetailActivity::class.java)
                 intent.putExtra(TransactionDetailActivity.EXTRA_ID, transaction?.transactionId)
@@ -35,5 +36,20 @@ open class TransactionAdapter(query: Query): FirestoreAdapter<TransactionAdapter
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         holder.bind(getSnapshot(position))
+    }
+
+    fun updateQuery(argument: String){
+        val query = when {
+            (argument == "all") -> {
+                getFirebaseFirestoreInstance().collection("Transactions")
+                    .orderBy("dateTime", Query.Direction.DESCENDING)
+            }
+            else -> {
+                getFirebaseFirestoreInstance().collection("Transactions")
+                    .orderBy("dateTime", Query.Direction.DESCENDING)
+                    .whereEqualTo("status", argument)
+            }
+        }
+        this.setQuery(query)
     }
 }
